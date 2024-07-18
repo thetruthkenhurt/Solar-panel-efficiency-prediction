@@ -1,14 +1,24 @@
 import pandas as pd
 
 def feature_engineer(weather_df):
+    # Create a composite feature for total rainfall
+    weather_df['total_rainfall'] = (weather_df['Daily Rainfall Total (mm)'] +
+                                    weather_df['Highest 30 Min Rainfall (mm)'] +
+                                    weather_df['Highest 60 Min Rainfall (mm)'] +
+                                    weather_df['Highest 120 Min Rainfall (mm)'])
+    
+    # Optionally keep or remove temperature_range and rainfall_intensity
     weather_df['temperature_range'] = weather_df['Maximum Temperature (deg C)'] - weather_df['Min Temperature (deg C)']
     weather_df['rainfall_intensity'] = weather_df['Daily Rainfall Total (mm)'] / weather_df['Sunshine Duration (hrs)']
     
     return weather_df
 
 def encode_target(df):
-    df['efficiency_label'] = pd.cut(df['Daily Solar Panel Efficiency'], bins=[-1, 0.33, 0.66, 1], labels=['Low', 'Medium', 'High'])
-    df['efficiency_label'] = df['efficiency_label'].map({'Low': 0, 'Medium': 1, 'High': 2})
+    if 'Daily Solar Panel Efficiency' in df.columns:
+        efficiency_mapping = {'Low': 0, 'Medium': 1, 'High': 2}
+        df['efficiency_label'] = df['Daily Solar Panel Efficiency'].map(efficiency_mapping)
+    else:
+        raise KeyError("The column 'Daily Solar Panel Efficiency' is missing from the DataFrame.")
     return df
 
 if __name__ == "__main__":

@@ -1,8 +1,10 @@
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import StandardScaler
+# Inside data_preprocessing.py
 
 def preprocess_data(weather_df, air_quality_df):
+    import pandas as pd
+    import numpy as np
+    from sklearn.preprocessing import StandardScaler
+
     # Handle missing values using forward fill
     weather_df.ffill(inplace=True)
     air_quality_df.ffill(inplace=True)
@@ -84,25 +86,11 @@ def preprocess_data(weather_df, air_quality_df):
     # Select only numeric columns for scaling
     weather_df_numeric = weather_df.select_dtypes(include=[np.number])
 
-    # Debugging: Check if the DataFrame to be scaled is clean
-    print("Weather DataFrame to be scaled (head):")
-    print(weather_df_numeric.head())
-    print("Data types in Weather DataFrame:")
-    print(weather_df_numeric.dtypes)
-    print("Summary statistics for Weather DataFrame:")
-    print(weather_df_numeric.describe())
-
     # Standardize the numeric data
     scaler = StandardScaler()
     weather_df_scaled = scaler.fit_transform(weather_df_numeric)
 
-    return weather_df_scaled, air_quality_df
+    # Convert back to DataFrame with original columns
+    weather_df_scaled = pd.DataFrame(weather_df_scaled, columns=weather_df_numeric.columns)
 
-if __name__ == "__main__":
-    from data_loader import load_data, convert_date_columns
-    import os
-    DB_PATH = os.getenv('DB_PATH', 'data')
-    weather_df, air_quality_df = load_data(DB_PATH)
-    weather_df, air_quality_df = convert_date_columns(weather_df, air_quality_df)
-    weather_df_scaled, air_quality_df = preprocess_data(weather_df, air_quality_df)
-    print("Data Preprocessed Successfully")
+    return weather_df_scaled, air_quality_df
