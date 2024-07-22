@@ -1,7 +1,13 @@
 import sqlite3
 import pandas as pd
+import os 
 
 def load_data(db_path):
+    print(f"Loading data from: {db_path}")
+    if not os.path.exists(f'{db_path}/weather.db') or not os.path.exists(f'{db_path}/air_quality.db'):
+        print(f"Data files not found in {db_path}. Skipping data loading.")
+        return None, None
+
     conn_weather = sqlite3.connect(f'{db_path}/weather.db')
     weather_df = pd.read_sql_query("SELECT * FROM weather", conn_weather)
     conn_weather.close()
