@@ -1,7 +1,7 @@
-pandas
-numpy
-scikit-learn
-matplotlib
-seaborn
-sqlite3
-imbalanced-learn
+numpy==1.26.4
+pandas==2.2.1
+matplotlib==3.4.2
+seaborn==0.11.2
+scikit-learn==1.2.2
+xgboost==2.0.3
+imbalanced-learn==0.12.3

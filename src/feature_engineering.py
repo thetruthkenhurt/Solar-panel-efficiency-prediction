@@ -1,17 +1,21 @@
 import pandas as pd
+from sklearn.feature_selection import RFE
+from sklearn.ensemble import RandomForestClassifier
 
-def feature_engineer(weather_df):
+def feature_engineer(weather_df, air_quality_df):
+    # Combine weather and air quality data
+    combined_df = pd.merge(weather_df, air_quality_df, on='date', how='inner')
+
     # Create a composite feature for total rainfall
-    weather_df['total_rainfall'] = (weather_df['Daily Rainfall Total (mm)'] +
-                                    weather_df['Highest 30 Min Rainfall (mm)'] +
-                                    weather_df['Highest 60 Min Rainfall (mm)'] +
-                                    weather_df['Highest 120 Min Rainfall (mm)'])
-    
-    # Optionally keep or remove temperature_range and rainfall_intensity
-    weather_df['temperature_range'] = weather_df['Maximum Temperature (deg C)'] - weather_df['Min Temperature (deg C)']
-    weather_df['rainfall_intensity'] = weather_df['Daily Rainfall Total (mm)'] / weather_df['Sunshine Duration (hrs)']
-    
-    return weather_df
+    combined_df['total_rainfall'] = (combined_df['Daily Rainfall Total (mm)'] +
+                                     combined_df['Highest 30 Min Rainfall (mm)'] +
+                                     combined_df['Highest 60 Min Rainfall (mm)'] +
+                                     combined_df['Highest 120 Min Rainfall (mm)'])
+
+    # Create new feature: Temperature-Humidity Interaction
+    combined_df['temp_humidity_interaction'] = combined_df['Maximum Temperature (deg C)'] * combined_df['Relative Humidity (%)']
+
+    return combined_df
 
 def encode_target(df):
     if 'Daily Solar Panel Efficiency' in df.columns:
@@ -21,14 +25,9 @@ def encode_target(df):
         raise KeyError("The column 'Daily Solar Panel Efficiency' is missing from the DataFrame.")
     return df
 
-if __name__ == "__main__":
-    from data_loader import load_data, convert_date_columns
-    from data_preprocessing import preprocess_data
-    import os
-    DB_PATH = os.getenv('DB_PATH', 'data')
-    weather_df, air_quality_df = load_data(DB_PATH)
-    weather_df, air_quality_df = convert_date_columns(weather_df, air_quality_df)
-    weather_df_scaled, air_quality_df = preprocess_data(weather_df, air_quality_df)
-    weather_df = feature_engineer(pd.DataFrame(weather_df_scaled, columns=weather_df.columns))
-    weather_df = encode_target(weather_df)
-    print("Feature Engineering Completed Successfully")
+def select_features(X, y, num_features):
+    model = RandomForestClassifier()
+    rfe = RFE(model, n_features_to_select=num_features)
+    fit = rfe.fit(X, y)
+    selected_features = X.columns[fit.support_]
+    return selected_features
