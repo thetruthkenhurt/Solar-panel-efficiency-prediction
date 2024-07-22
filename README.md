@@ -39,6 +39,7 @@ Note that data is not uploaded per instructions of the assessment.
 
 4. **Model Training & Evaluation (`train_model.py`)**:
     - Train machine learning models and evaluate their performance using various metrics.
+	- Also includes code for hyperparameter tuning and training tuned models.
 	
 ## Logical Steps/Flow of the Pipeline
 
