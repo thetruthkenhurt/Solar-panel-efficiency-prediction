@@ -19,6 +19,10 @@ def load_data(db_path):
     return weather_df, air_quality_df
 
 def convert_date_columns(weather_df, air_quality_df):
+    if weather_df is None or air_quality_df is None:
+        print("Skipping date conversion due to missing data.")
+        return None, None
+
     weather_df['date'] = pd.to_datetime(weather_df['date'], format='%d/%m/%Y')
     air_quality_df['date'] = pd.to_datetime(air_quality_df['date'], format='%d/%m/%Y')
     return weather_df, air_quality_df
