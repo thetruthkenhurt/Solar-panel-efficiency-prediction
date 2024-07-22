@@ -5,7 +5,7 @@
 ## Email: kennethgjs@gmail.com
 
 ### Project Structure
-
+```bash
 ├── data
 │   ├── weather.db
 │   └── air_quality.db
@@ -18,7 +18,7 @@
 ├── requirements.txt
 ├── run.sh
 └── README.md
-
+```
 Note that data is not uploaded per instructions of the assessment.
 
 ### Instructions to Run
@@ -184,13 +184,6 @@ Here are the results of the best-performing models:
     - **Class 2 (High Efficiency)**: Precision - 0.84, Recall - 0.85, F1-Score - 0.84
 - **ROC AUC Score**: 0.9209596510885284
 
-| Metric       | Score |
-|--------------|-------|
-| Precision    | 0.94  |
-| Recall       | 0.83  |
-| F1-Score     | 0.88  |
-| Accuracy     | 0.90  |
-| ROC AUC Score| 0.921 |
 
 #### Model Tuning 
 We chose to tune the XGBoost model over the RandomForest model despite their similar untuned performance due to XGBoost's superior handling of imbalanced datasets and its ability to enhance predictive power through gradient boosting and regularization techniques.
