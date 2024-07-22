@@ -5,14 +5,15 @@
 ## Email: kennethgjs@gmail.com
 
 ### Project Structure
+
 ├── data
-│ ├── weather.db
-│ ├── air_quality.db
+│   ├── weather.db
+│   └── air_quality.db
 ├── src
-│ ├── data_loader.py
-│ ├── data_preprocessing.py
-│ ├── feature_engineering.py
-│ ├── train_model.py
+│   ├── data_loader.py
+│   ├── data_preprocessing.py
+│   ├── feature_engineering.py
+│   └── train_model.py
 ├── eda.ipynb
 ├── requirements.txt
 ├── run.sh
@@ -22,7 +23,7 @@ Note that data is not uploaded per instructions of the assessment.
 
 ### Instructions to Run
 1. Ensure you have all dependencies installed: `pip install -r requirements.txt`
-2. Set the `DB_PATH` environment variable to the path of your data directory: `export DB_PATH=data`
+2. Set the `DB_PATH` environment variable to the path of your data directory: `export DB_PATH=data` 
 3. Run the pipeline: `bash run.sh`
 
 ## Pipeline Overview
@@ -196,9 +197,10 @@ We chose to tune the XGBoost model over the RandomForest model despite their sim
 
 Results of Tuning Hyperparameters for XGBoost model:
 
-Training XGBoost model with best parameters on full dataset...
-Stratified K-Fold Cross-Validation Scores for XGBoost: [0.90933333, 0.91111111, 0.90035587, 0.91192171, 0.91548043]
-Mean CV Score for XGBoost: 0.9096404903123764
+| Metric                             | Score                                      |
+|------------------------------------|--------------------------------------------|
+| Stratified K-Fold CV Scores        | 0.9093, 0.9111, 0.9004, 0.9119, 0.9155     |
+| Mean CV Score                      | 0.9096                                     |
 
 | Metric       | Score |
 |--------------|-------|
