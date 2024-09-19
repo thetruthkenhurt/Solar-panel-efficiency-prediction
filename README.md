@@ -1,9 +1,3 @@
-# AIAP 18 Technical Assessment
-
-## Full Name: Goh Joon Sian Kenneth
-
-## Email: kennethgjs@gmail.com
-
 ### Project Structure
 ```bash
 ├── data
@@ -60,7 +54,7 @@ Note that data is not uploaded per instructions of the assessment.
 5. **Model Evaluation**:
     - Compare model performances and select the best model based on evaluation metrics.
 
-## Task 1: EDA 
+## Task 1: Exploratory Data Analysis (EDA)
 
 ### Preprocessing Steps
 During the preprocessing step, we applied several transformations to clean and prepare the data for analysis and modeling. Key actions included:
