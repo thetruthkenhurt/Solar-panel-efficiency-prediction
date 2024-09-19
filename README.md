@@ -13,7 +13,7 @@
 ├── run.sh
 └── README.md
 ```
-Note that data is not uploaded per instructions of the assessment.
+Please note that as the dataset is from a confidential source, it will not be provided in the repository. This is intended as a showcase of my work done implementing ML and DA techniques.
 
 ### Instructions to Run
 1. Ensure you have all dependencies installed: `pip install -r requirements.txt`
